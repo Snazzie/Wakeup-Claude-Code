@@ -1,0 +1,18 @@
+name: Claude Scheduled Sync
+on:
+  schedule:
+    - cron: '0 */5 * * *' # Runs every 5 hours
+  workflow_dispatch: # Allows manual trigger for testing
+
+jobs:
+  claude-session:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_MODEL: haiku # Sets Haiku as the default for this job
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: "hi"

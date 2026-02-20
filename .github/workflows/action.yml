@@ -1,9 +1,15 @@
 name: Claude 5-Hour Sync
 on:
   schedule:
-    # Runs at 01:01, 06:01, 11:01, 16:01, 21:01 UTC
     - cron: '1 1-23/5 * * *'
-  workflow_dispatch: # Allows you to test it manually right now
+  workflow_dispatch:
+
+# --- ADD THIS BLOCK ---
+permissions:
+  id-token: write  # Required for OIDC authentication
+  contents: write  # Required if you want Claude to commit changes
+  pull-requests: write # Required if you want Claude to comment on PRs
+# ----------------------
 
 jobs:
   claude-automation:
@@ -14,7 +20,7 @@ jobs:
       - name: Run Claude Code (Haiku)
         uses: anthropics/claude-code-action@v1
         with:
+          # Ensure this secret is set in your Repo Settings
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # Force Haiku model and prompt
           prompt: "Analyze recent repo activity and summarize changes."
           claude_args: "--model haiku --max-turns 5"

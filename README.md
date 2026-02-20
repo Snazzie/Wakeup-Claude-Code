@@ -1,8 +1,14 @@
 # Wakeup Claude Code
 
-A GitHub Action that keeps your Claude Code OAuth session alive by pinging it on a schedule every 5 hours.
+A GitHub Action that pre-starts your Claude Code session so the usage window is already ticking before you sit down to code.
 
-Claude Code OAuth tokens expire after periods of inactivity. This repo runs a lightweight workflow automatically to prevent that.
+## The Problem
+
+Claude Code usage limits reset on a timer. When you start coding, that kicks off a fresh session — meaning if you code hard, you might hit the wall and then have to wait the full window out before the limit resets.
+
+## The Solution
+
+This workflow fires a session every 5 hours in the background. When you sit down to code, your session was already started hours ago — so a reset is coming sooner. You're less likely to hit the limit mid-flow and get stuck waiting.
 
 ## Setup
 
@@ -34,15 +40,7 @@ In your forked repo:
 
 If GitHub Actions are disabled on your fork, go to the **Actions** tab and enable them.
 
-That's it. The workflow runs automatically every 5 hours and on every manual trigger.
-
-## Manual trigger
-
-You can also trigger it manually from the **Actions** tab → **Claude 5-Hour Sync** → **Run workflow**.
-
-## How it works
-
-The workflow uses [`anthropics/claude-code-action`](https://github.com/anthropics/claude-code-action) to send a simple `"hi"` prompt with `claude-haiku` once per run. This is enough to keep the session token active without consuming meaningful credits.
+The workflow will now run automatically at **1am, 6am, 11am, 4pm, and 9pm UTC** every day.
 
 ## License
 

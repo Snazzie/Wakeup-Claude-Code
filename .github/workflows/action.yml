@@ -22,5 +22,5 @@ jobs:
         with:
           # Ensure this secret is set in your Repo Settings
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: "hi"
+          prompt: "say hi"
           claude_args: "--model haiku --max-turns 1"
